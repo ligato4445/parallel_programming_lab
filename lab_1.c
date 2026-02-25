@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <sys/time.h> // Для gettimeofday
 
-// --- Функции только вычисления ---
+// --- Функции вычислений ---
 
 void normal(float a[], float b[], float c[]) {
     for (int i = 0; i < 4; i++) {
@@ -22,7 +22,7 @@ void sse(float a[], float b[], float c[]) {
     );
 }
 
-// --- Вспомогательная функция для замера времени ---
+// --- Функция для замера времени ---
 double get_time() {
     struct timeval tv;
     gettimeofday(&tv, NULL);
@@ -35,13 +35,11 @@ int main() {
     float b[4] = {40.0f, 50.0f, 70.0f, 60.0f};
     float c[4];
     
-    // Количество итераций должно быть БОЛЬШИМ, чтобы увидеть разницу
-    // 100 000 000 (сто миллионов)
     int iterations_num = 100000000; 
 
     printf("Запуск тестов (%d итераций)...\n\n", iterations_num);
 
-    // --- ТЕСТ 1: Normal (Скалярный) ---
+    // --- ТЕСТ 1: Normal ---
     double start = get_time();
     for (int i = 0; i < iterations_num; i++) {
         normal(a, b, c);
@@ -49,12 +47,12 @@ int main() {
     double end = get_time();
     double time_normal = end - start;
 
-    // Проверка результата (чтобы компилятор не выкинул цикл как бесполезный)
+    // результат normal
     printf("Normal результат: %f %f %f %f\n", c[0], c[1], c[2], c[3]);
     printf("Normal время:     %.6f сек\n\n", time_normal);
 
 
-    // --- ТЕСТ 2: SSE (Векторный) ---
+    // --- ТЕСТ 2: SSE ---
     start = get_time();
     for (int i = 0; i < iterations_num; i++) {
         sse(a, b, c);
@@ -62,7 +60,7 @@ int main() {
     end = get_time();
     double time_sse = end - start;
 
-    // Проверка результата
+    // результат sse
     printf("SSE результат:    %f %f %f %f\n", c[0], c[1], c[2], c[3]);
     printf("SSE время:        %.6f сек\n\n", time_sse);
 
