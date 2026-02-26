@@ -1,9 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <sys/time.h> // Для gettimeofday
+#include <sys/time.h> 
 
 // --- Функции вычислений ---
-
+// Атрибут noinline запрещает компилятору встраивать функцию (цикл не свернется)
+__attribute__((noinline))
 void normal(float a[], float b[], float c[]) {
     for (int i = 0; i < 4; i++) {
         c[i] = a[i] * b[i];
@@ -18,7 +19,7 @@ void sse(float a[], float b[], float c[]) {
         "movups %%xmm0, %[c]\n"
         :
         : [a]"m"(*a), [b]"m"(*b), [c]"m"(*c)
-        : "%xmm0", "%xmm1", "memory" // Добавили "memory" для надежности
+        : "%xmm0", "%xmm1"
     );
 }
 
@@ -35,13 +36,13 @@ int main() {
     float b[4] = {40.0f, 50.0f, 70.0f, 60.0f};
     float c[4];
     
-    int iterations_num = 100000000; 
+    long iterations_num = 1000000000; 
 
-    printf("Запуск тестов (%d итераций)...\n\n", iterations_num);
+    printf("Запуск тестов (%ld итераций)...\n\n", iterations_num);
 
     // --- ТЕСТ 1: Normal ---
     double start = get_time();
-    for (int i = 0; i < iterations_num; i++) {
+    for (long i = 0; i < iterations_num; i++) {
         normal(a, b, c);
     }
     double end = get_time();
@@ -54,7 +55,7 @@ int main() {
 
     // --- ТЕСТ 2: SSE ---
     start = get_time();
-    for (int i = 0; i < iterations_num; i++) {
+    for (long i = 0; i < iterations_num; i++) {
         sse(a, b, c);
     }
     end = get_time();
