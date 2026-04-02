@@ -3,7 +3,7 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.IntBinaryOperator;
 
-public class Main {
+public class lab4 {
 
     public static final int THREADS = 50;
     public static final int ITERATIONS = 100000; 
