@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.concurrent.*;
 
 public class lab5_main {
-    public static final int THREADS = 15;
+    public static final int THREADS = 10;
     public static final int COUNT = 3;
     public static Semaphore regularSemaphore = new Semaphore(COUNT);
     public static lab5_mySemaphore mySemaphore = new lab5_mySemaphore(COUNT);
