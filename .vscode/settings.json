@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "lab_7/lib/mappedbus-0.5.jar"
+    ]
+}
